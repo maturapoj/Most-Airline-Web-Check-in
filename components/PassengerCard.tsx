@@ -21,16 +21,16 @@ export function PassengerCard({
         <div
             onClick={selectable ? onClick : undefined}
             className={`
-        relative p-4 rounded-2xl bg-white border-2 transition-all group
+        relative p-4 rounded-2xl bg-white dark:bg-slate-800 border-2 transition-all group
         ${selectable
                     ? "cursor-pointer hover:-translate-y-0.5"
-                    : "cursor-default border-slate-200"
+                    : "cursor-default border-slate-200 dark:border-slate-700"
                 }
         ${selectable && isSelected
                     ? "border-[#2F6FED] shadow-[0_4px_20px_-4px_rgba(47,111,237,0.3)]"
                     : selectable
-                        ? "border-transparent shadow-sm hover:shadow-md hover:border-slate-200"
-                        : ""
+                        ? "border-transparent dark:border-transparent shadow-sm hover:shadow-md hover:border-slate-200 dark:hover:border-slate-600"
+                        : "border-slate-200 dark:border-slate-700"
                 }
       `}
         >
@@ -45,15 +45,15 @@ export function PassengerCard({
                 </div>
             )}
 
-            <div className="flex flex-col">
-                <h3 className="text-lg font-bold text-slate-800 uppercase tracking-wide">
+            <div className="flex flex-col transition-colors">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wide">
                     {passenger.name}
                 </h3>
                 <div className="flex items-center gap-3 mt-2">
-                    <span className="px-2 py-0.5 rounded-md bg-slate-100 text-xs font-semibold text-slate-500 uppercase">
+                    <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">
                         {passenger.type}
                     </span>
-                    <span className="text-sm text-slate-500 font-medium">
+                    <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">
                         Seat {passenger.seat}
                     </span>
                 </div>

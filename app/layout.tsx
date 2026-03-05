@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CheckinProvider } from "@/store/CheckinContext";
+import { ThemeWrapper } from "@/components/ThemeWrapper";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,13 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 min-h-screen font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen font-sans`}
       >
-        <main className="max-w-[900px] mx-auto min-h-screen bg-slate-50 flex flex-col items-center">
-          <CheckinProvider>
+        <CheckinProvider>
+          <ThemeWrapper>
             {children}
-          </CheckinProvider>
-        </main>
+          </ThemeWrapper>
+        </CheckinProvider>
       </body>
     </html>
   );

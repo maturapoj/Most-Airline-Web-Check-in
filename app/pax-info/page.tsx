@@ -12,8 +12,10 @@ export default function PaxInfoPage() {
 
     const selectedPassengers = state.passengers.filter((p) => p.selected);
 
-    // Local state to track validity of all forms
-    const [isValid, setIsValid] = useState(false);
+    // Compute validity functionally mapping over currently selected passengers
+    const isValid = selectedPassengers.length > 0 && selectedPassengers.every(
+        (p) => p.nationality && p.nationality.length >= 2 && p.phone && p.phone.length > 5
+    );
 
     useEffect(() => {
         if (selectedPassengers.length === 0) {
@@ -21,13 +23,7 @@ export default function PaxInfoPage() {
         }
     }, [selectedPassengers, router]);
 
-    useEffect(() => {
-        // Check if every selected pax has both nationality and phone length > 5
-        const allValid = selectedPassengers.every(
-            (p) => p.nationality && p.nationality.length >= 2 && p.phone && p.phone.length > 5
-        );
-        setIsValid(allValid);
-    }, [selectedPassengers]);
+
 
     const handleContinue = () => {
         if (isValid) {
@@ -42,7 +38,7 @@ export default function PaxInfoPage() {
     if (selectedPassengers.length === 0) return null;
 
     return (
-        <div className="w-full min-h-screen flex flex-col bg-slate-50 animate-in fade-in slide-in-from-right-4 duration-300">
+        <div className="w-full flex-1 flex flex-col bg-slate-50 dark:bg-slate-900 animate-in fade-in slide-in-from-right-4 duration-300 transition-colors">
             <StepHeader
                 step={3}
                 title="Passenger Details"
@@ -54,14 +50,14 @@ export default function PaxInfoPage() {
                     {selectedPassengers.map((pax, index) => (
                         <div
                             key={pax.id}
-                            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-4"
+                            className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-4 transition-colors"
                         >
-                            <h3 className="font-bold text-slate-800 border-b border-slate-100 pb-2 mb-2">
+                            <h3 className="font-bold text-slate-800 dark:text-slate-100 border-b border-slate-100 dark:border-slate-700 pb-2 mb-2">
                                 {index + 1}. {pax.name}
                             </h3>
 
                             <div className="flex flex-col gap-1">
-                                <label className="text-sm font-semibold text-slate-700">
+                                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                                     Nationality (2-letter code)
                                 </label>
                                 <input
@@ -75,17 +71,17 @@ export default function PaxInfoPage() {
                                         })
                                     }
                                     placeholder="e.g. TH, US"
-                                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-100 bg-slate-50 text-slate-900 focus:outline-none focus:border-[#2F6FED] focus:bg-white transition-colors"
+                                    className="w-full px-4 py-3 rounded-xl border-2 border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 focus:outline-none focus:border-[#2F6FED] focus:bg-white dark:focus:bg-slate-800 transition-colors"
                                 />
                             </div>
 
                             <div className="flex flex-col gap-1">
-                                <label className="text-sm font-semibold text-slate-700">
+                                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                                     Phone Number
                                 </label>
                                 <div className="flex gap-2">
                                     <select
-                                        className="w-24 px-2 tracking-tighter py-3 rounded-xl border-2 border-slate-100 bg-slate-50 text-slate-900 focus:outline-none focus:border-[#2F6FED] bg-white transition-colors appearance-none text-center"
+                                        className="w-24 px-2 tracking-tighter py-3 rounded-xl border-2 border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 focus:outline-none focus:border-[#2F6FED] bg-white dark:focus:bg-slate-800 transition-colors appearance-none text-center"
                                         defaultValue="+66"
                                     >
                                         <option value="+66">🇹🇭 +66</option>
@@ -103,7 +99,7 @@ export default function PaxInfoPage() {
                                             })
                                         }
                                         placeholder="e.g. 811234567"
-                                        className="flex-1 px-4 py-3 rounded-xl border-2 border-slate-100 bg-slate-50 text-slate-900 focus:outline-none focus:border-[#2F6FED] focus:bg-white transition-colors"
+                                        className="flex-1 px-4 py-3 rounded-xl border-2 border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 focus:outline-none focus:border-[#2F6FED] focus:bg-white dark:focus:bg-slate-800 transition-colors"
                                     />
                                 </div>
                             </div>
@@ -113,11 +109,11 @@ export default function PaxInfoPage() {
             </div>
 
             {/* Sticky Footer */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-slate-200 p-4 md:p-6 pb-safe z-10">
+            <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 p-4 md:p-6 pb-safe z-20 transition-colors">
                 <div className="max-w-[900px] mx-auto flex gap-4">
                     <button
                         onClick={handleBack}
-                        className="w-1/3 py-3 px-6 rounded-xl font-semibold text-slate-700 bg-white border-2 border-slate-200 hover:bg-slate-50 transition-colors"
+                        className="w-1/3 py-3 px-6 rounded-xl font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                     >
                         Back
                     </button>

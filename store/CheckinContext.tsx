@@ -17,6 +17,7 @@ interface CheckinState {
     lastName: string;
     passengers: Passenger[];
     acceptedDangerousGoods: boolean;
+    isDarkMode: boolean;
 }
 
 interface CheckinContextType {
@@ -31,6 +32,7 @@ interface CheckinContextType {
         details: { nationality: string; phone: string }
     ) => void;
     setAcceptedDangerousGoods: (accepted: boolean) => void;
+    toggleDarkMode: () => void;
 }
 
 const initialState: CheckinState = {
@@ -38,6 +40,7 @@ const initialState: CheckinState = {
     lastName: "",
     passengers: [],
     acceptedDangerousGoods: false,
+    isDarkMode: false,
 };
 
 const CheckinContext = createContext<CheckinContextType | undefined>(undefined);
@@ -92,6 +95,10 @@ export function CheckinProvider({ children }: { children: ReactNode }) {
         setState((prev) => ({ ...prev, acceptedDangerousGoods: accepted }));
     };
 
+    const toggleDarkMode = () => {
+        setState((prev) => ({ ...prev, isDarkMode: !prev.isDarkMode }));
+    };
+
     return (
         <CheckinContext.Provider
             value={{
@@ -103,6 +110,7 @@ export function CheckinProvider({ children }: { children: ReactNode }) {
                 clearAllPassengers,
                 updatePassengerDetails,
                 setAcceptedDangerousGoods,
+                toggleDarkMode,
             }}
         >
             {children}

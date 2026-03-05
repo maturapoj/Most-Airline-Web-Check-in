@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Plane, Info } from "lucide-react";
 import { useCheckin } from "@/store/CheckinContext";
 import { PrimaryButton } from "@/components/PrimaryButton";
-
+import { ThemeToggle } from "@/components/ThemeToggle";
 const MOCK_PASSENGERS = [
     {
         id: "p1",
@@ -48,87 +48,94 @@ export default function CheckinPage() {
     };
 
     return (
-        <div className="w-full min-h-screen bg-slate-50 flex flex-col md:flex-row p-4 md:p-8 gap-8 md:gap-12 relative animate-in fade-in duration-500">
+        <div className="w-full relative animate-in fade-in duration-500">
 
             {/* Background Gradient Detail */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2F6FED]/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 
-            {/* Main Check-in Form Column */}
-            <div className="flex-1 max-w-lg pt-8 md:pt-16">
-                <div className="mb-8 flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#2F6FED] to-[#4F8FF7] flex items-center justify-center shadow-lg shadow-blue-500/20">
-                        <Plane className="w-6 h-6 text-white" />
+            {/* Theme Toggle Wrapper */}
+            <div className="absolute top-6 right-6 md:right-8 flex gap-4">
+                <ThemeToggle />
+            </div>
+
+            <div className="flex flex-col md:flex-row p-4 md:p-8 gap-8 md:gap-12 pt-16 md:pt-8 w-full">
+                {/* Main Check-in Form Column */}
+                <div className="flex-1 max-w-lg pt-8 md:pt-16">
+                    <div className="mb-8 flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#2F6FED] to-[#4F8FF7] flex items-center justify-center shadow-lg shadow-blue-500/20">
+                            <Plane className="w-6 h-6 text-white" />
+                        </div>
+                        <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-slate-100 dark:to-slate-300 tracking-tight">
+                            Online Check-in
+                        </h1>
                     </div>
-                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 tracking-tight">
-                        Online Check-in
-                    </h1>
+
+                    <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-700 transition-colors">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                            <div>
+                                <label
+                                    htmlFor="lastName"
+                                    className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2"
+                                >
+                                    Last Name
+                                </label>
+                                <input
+                                    id="lastName"
+                                    type="text"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value.toUpperCase())}
+                                    placeholder="e.g. HUUM"
+                                    className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#2F6FED] dark:focus:border-[#4F8FF7] focus:bg-white dark:focus:bg-slate-800 transition-colors font-medium uppercase tracking-wide"
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-2">
+                                <label
+                                    htmlFor="pnr"
+                                    className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2"
+                                >
+                                    Booking Reference (PNR)
+                                </label>
+                                <input
+                                    id="pnr"
+                                    type="text"
+                                    value={pnr}
+                                    onChange={(e) => setPnr(e.target.value.toUpperCase())}
+                                    placeholder="e.g. ABC123"
+                                    className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-50 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#2F6FED] dark:focus:border-[#4F8FF7] focus:bg-white dark:focus:bg-slate-800 transition-colors font-medium uppercase tracking-wide"
+                                    required
+                                />
+                            </div>
+
+                            <PrimaryButton type="submit" disabled={!isValid} isLoading={isLoading}>
+                                Retrieve Booking
+                            </PrimaryButton>
+                        </form>
+                    </div>
+
+                    <div className="mt-6 flex items-start gap-3 bg-blue-50/50 dark:bg-slate-800 p-4 rounded-2xl border border-blue-100/50 dark:border-slate-700 transition-colors">
+                        <Info className="w-5 h-5 text-[#2F6FED] shrink-0 mt-0.5" />
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                            Check-in opens 48 hours to 90 minutes prior to departure. Use the 6-character PNR found in your confirmation email.
+                        </p>
+                    </div>
                 </div>
 
-                <div className="bg-white rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                        <div>
-                            <label
-                                htmlFor="lastName"
-                                className="block text-sm font-semibold text-slate-700 mb-2"
-                            >
-                                Last Name
-                            </label>
-                            <input
-                                id="lastName"
-                                type="text"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value.toUpperCase())}
-                                placeholder="e.g. HUUM"
-                                className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-100 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#2F6FED] focus:bg-white transition-all font-medium uppercase tracking-wide"
-                                required
-                            />
-                        </div>
-
-                        <div className="mb-2">
-                            <label
-                                htmlFor="pnr"
-                                className="block text-sm font-semibold text-slate-700 mb-2"
-                            >
-                                Booking Reference (PNR)
-                            </label>
-                            <input
-                                id="pnr"
-                                type="text"
-                                value={pnr}
-                                onChange={(e) => setPnr(e.target.value.toUpperCase())}
-                                placeholder="e.g. ABC123"
-                                className="w-full px-4 py-3.5 rounded-xl border-2 border-slate-100 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#2F6FED] focus:bg-white transition-all font-medium uppercase tracking-wide"
-                                required
-                            />
-                        </div>
-
-                        <PrimaryButton type="submit" disabled={!isValid} isLoading={isLoading}>
-                            Retrieve Booking
-                        </PrimaryButton>
-                    </form>
+                {/* Side Info Column (Desktop Tips) */}
+                <div className="hidden md:flex flex-1 pt-16 flex-col gap-4 max-w-sm pl-8 border-l border-slate-200/60 dark:border-slate-700 transition-colors">
+                    <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2 tracking-tight">Travel Tips</h3>
+                    <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col gap-2 transition-all hover:-translate-y-1 hover:border-[#2F6FED]">
+                        <h4 className="font-bold text-[#2F6FED] dark:text-[#4F8FF7]">Fast Track Security</h4>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Add fast track to your booking to bypass the lines and reach the lounge sooner.</p>
+                    </div>
+                    <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col gap-2 transition-all hover:-translate-y-1 hover:border-[#2F6FED]">
+                        <h4 className="font-bold text-[#2F6FED] dark:text-[#4F8FF7]">Dangerous Goods</h4>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">Ensure you are familiar with prohibited items before arriving at the airport to avoid delays.</p>
+                    </div>
                 </div>
 
-                <div className="mt-6 flex items-start gap-3 bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
-                    <Info className="w-5 h-5 text-[#2F6FED] shrink-0 mt-0.5" />
-                    <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                        Check-in opens 48 hours to 90 minutes prior to departure. Use the 6-character PNR found in your confirmation email.
-                    </p>
-                </div>
             </div>
-
-            {/* Side Info Column (Desktop Tips) */}
-            <div className="hidden md:flex flex-1 pt-16 flex-col gap-4 max-w-sm pl-8 border-l border-slate-200/60">
-                <h3 className="text-lg font-bold text-slate-800 mb-2 tracking-tight">Travel Tips</h3>
-                <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col gap-2 transition-transform hover:-translate-y-1">
-                    <h4 className="font-bold text-[#2F6FED]">Fast Track Security</h4>
-                    <p className="text-sm text-slate-500 font-medium">Add fast track to your booking to bypass the lines and reach the lounge sooner.</p>
-                </div>
-                <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col gap-2 transition-transform hover:-translate-y-1">
-                    <h4 className="font-bold text-[#2F6FED]">Dangerous Goods</h4>
-                    <p className="text-sm text-slate-500 font-medium">Ensure you are familiar with prohibited items before arriving at the airport to avoid delays.</p>
-                </div>
-            </div>
-
         </div>
     );
 }

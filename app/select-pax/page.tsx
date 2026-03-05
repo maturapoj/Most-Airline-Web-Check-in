@@ -36,7 +36,7 @@ export default function SelectPaxPage() {
     if (passengers.length === 0) return null;
 
     return (
-        <div className="w-full min-h-screen flex flex-col bg-slate-50 animate-in fade-in slide-in-from-right-4 duration-300">
+        <div className="w-full flex-1 flex flex-col bg-slate-50 dark:bg-slate-900 animate-in fade-in slide-in-from-right-4 duration-300 transition-colors">
             <StepHeader
                 step={2}
                 title="Select Passengers"
@@ -58,7 +58,7 @@ export default function SelectPaxPage() {
                 <div className="mt-8 flex justify-end">
                     <button
                         onClick={selectedCount === passengers.length ? clearAllPassengers : selectAllPassengers}
-                        className="px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors flex items-center gap-2"
+                        className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors flex items-center gap-2"
                     >
                         {selectedCount === passengers.length ? "✕ Clear All" : "✓ Select All"}
                     </button>
@@ -66,11 +66,11 @@ export default function SelectPaxPage() {
             </div>
 
             {/* Sticky Footer */}
-            <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-slate-200 p-4 md:p-6 pb-safe">
+            <div className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 p-4 md:p-6 pb-safe transition-colors z-20">
                 <div className="max-w-[900px] mx-auto flex gap-4">
                     <button
                         onClick={handleBack}
-                        className="w-1/3 py-3 px-6 rounded-xl font-semibold text-slate-700 bg-white border-2 border-slate-200 hover:bg-slate-50 transition-colors"
+                        className="w-1/3 py-3 px-6 rounded-xl font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                     >
                         Back
                     </button>
