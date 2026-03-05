@@ -60,6 +60,22 @@ bun run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## 🐳 Docker Support
+
+You can also run the application using Docker and Docker Compose for a production-like environment.
+
+### Using Docker Compose
+```bash
+docker compose up --build
+```
+
+### Using Docker
+```bash
+docker build -t airline-checkin .
+docker run -p 3000:3000 airline-checkin
+```
+
+
 ## 🌙 Dark Mode Implementation
 The system uses a manual toggle managed in `CheckinContext`. Tailwind CSS v4 is configured to detect the `.dark` class on the root element using a custom variant:
 
