@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plane, Info } from "lucide-react";
 import { useCheckin } from "@/store/CheckinContext";

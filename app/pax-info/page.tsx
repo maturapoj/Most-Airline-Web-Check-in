@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckin } from "@/store/CheckinContext";
 import { StepHeader } from "@/components/StepHeader";
