@@ -2,7 +2,7 @@
 
 A high-fidelity, 5-step web check-in application built with **Next.js 16**, **React 19**, and **Tailwind CSS v4**. This project features a modern, airline-inspired UI with a seamless dark mode experience, fluid animations, and a responsive, production-ready layout.
 
-![checkin-demo](https://github.com/user-attachments/assets/6cb278c4-f810-42d2-97f1-22f9936227fc)
+![checkin-demo](https://github.com/user-attachments/assets/88d2245c-0ba0-4abd-a8d6-e9bca3229d73)
 
 ## 🚀 Key Features
 
