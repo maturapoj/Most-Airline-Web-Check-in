@@ -7,12 +7,14 @@ A high-fidelity, 5-step web check-in application built with **Next.js 16**, **Re
 ## 🚀 Key Features
 
 - **✅ Multi-Step Check-in Flow**: A logical, 5-stage process derived from real-world airline SaaS patterns.
-- **✅ Seamless Dark Mode**: Context-aware theme management with a beautiful slate-dark aesthetic.
+- **✅ Intelligent Route Protection**: Integrated `StepGuard` to ensure linear progression and prevent unauthorized step skipping.
+- **✅ Seamless Dark Mode**: Context-aware theme management with a beautiful slate-dark aesthetic across all components and alerts.
 - **✅ Real-time State Management**: Powered by React Context API for instant passenger selection and detail synchronization.
+- **✅ Realistic Feedback**: Simulated API delays and polished loading states for a premium, non-instantaneous feel.
+- **✅ Robust Error Handling**: Form validation and scannable error alerts for incorrect booking information.
 - **✅ Premium UI/UX**: Mobile-first design using blue gradients, glassmorphism, and smooth micro-animations.
 - **✅ Scannable Boarding Passes**: High-fidelity visual cards with mock barcodes and "Add to Apple Wallet" integration.
-- **✅ Safety Compliance**: Dedicated dangerous goods policy verification step.
-- **✅ Production Ready**: Fully containerized with Docker and optimized for speed and accessibility.
+- **✅ Production Ready**: Fully containerized with Docker and optimized for performance using standalone output.
 
 ## 🛠️ Tech Stack
 
@@ -35,10 +37,11 @@ A high-fidelity, 5-step web check-in application built with **Next.js 16**, **Re
 │   ├── dangerous-good/  # Step 4: Safety policy & DG acknowledgement
 │   ├── boarding-pass/   # Step 5: Final boarding pass generation
 │   ├── globals.css      # Design system & Tailwind v4 config
-│   └── layout.tsx       # Root layout with ThemeWrapper & Context
+│   └── layout.tsx       # Root layout with ThemeWrapper & StepGuard
 ├── components/          # Reusable UI components
 │   ├── BoardingCard.tsx # High-fidelity boarding pass component
 │   ├── PassengerCard.tsx # Selectable passenger unit
+│   ├── StepGuard.tsx    # Intelligent route management
 │   ├── ThemeToggle.tsx  # Smooth theme switcher
 │   └── ...
 └── store/
@@ -62,7 +65,7 @@ Run the development server:
 ```bash
 bun run dev
 ```
-Access the app at [http://localhost:3000](http://localhost:3000).
+Access the app at [http://localhost:3000](http://localhost:3000). Use **HUUM** and **ABC123** to bypass validation.
 
 ## 🐳 Docker Support
 
@@ -81,16 +84,19 @@ docker run -p 3000:3000 airline-checkin
 
 ## 🌙 Technical Highlights
 
-### Tailwind v4 Dark Mode
+### 🛡️ Step Guard & Route Protection
+The application utilizes a custom `StepGuard` component that monitors the user's progress. It prevents manual URL entry into later steps (e.g., trying to access `/boarding-pass` directly) and redirects users to their furthest qualified step.
+
+### ⏳ Simulated API & Loading Logic
+To provide a realistic user experience, `async` loading states and artificial delays are implemented across the flow, ensuring that the interface provides clear feedback during transitions.
+
+### 🎨 Tailwind v4 Dark Mode
 The system implements a manual theme toggle using a custom Tailwind v4 variant. This allows for precise control over the dark mode transition without relying strictly on system preferences.
 
 ```css
 /* globals.css */
 @custom-variant dark (&:where(.dark, .dark *));
 ```
-
-### Performance Optimization
-The app leverages Next.js **Standalone Output** for Docker, significantly reducing image size by only including the necessary files for production.
 
 ## 📄 License
 This project is licensed under the MIT License.
