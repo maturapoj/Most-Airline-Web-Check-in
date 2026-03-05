@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✈️ Premium Airline Web Check-in System
 
-## Getting Started
+A high-fidelity, 5-step web check-in application built with **Next.js 15+**, **TypeScript**, and **Tailwind CSS v4**. This project features a modern, airline-inspired UI with a seamless dark mode experience and a responsive layout.
 
-First, run the development server:
+![Check-in Demo](./public/checkin-demo.webp)
+
+## 🚀 Key Features
+
+- **Multi-Step Flow**: A complete 5-stage check-in process from booking retrieval to boarding pass.
+- **Dark Mode Support**: Context-aware theme management with a beautiful slate-dark aesthetic.
+- **Dynamic State Management**: Powered by React Context API for real-time passenger selection and detail updates.
+- **High-Fidelity Boarding Passes**: Premium visual cards with scannable barcode mocks and "Add to Apple Wallet" styling.
+- **Safety Compliance**: Integrated dangerous goods policy acceptance step.
+- **Responsive & Premium UI**: Mobile-first design using blue gradients, glassmorphism, and smooth micro-animations.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **State Management**: React Context API
+- **Package Manager**: [Bun](https://bun.sh/)
+
+## 📂 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+├── app/
+│   ├── checkin/         # Step 1: Booking retrieval
+│   ├── select-pax/      # Step 2: Passenger selection
+│   ├── pax-info/        # Step 3: Passenger details
+│   ├── dangerous-good/  # Step 4: Safety policy
+│   ├── boarding-pass/   # Step 5: Final boarding pass
+│   ├── globals.css      # Core styles & Tailwind v4 config
+│   └── layout.tsx       # Root layout with ThemeWrapper
+├── components/          # Reusable UI components
+│   ├── BoardingCard.tsx
+│   ├── PassengerCard.tsx
+│   ├── ThemeToggle.tsx
+│   └── ...
+└── store/
+    └── CheckinContext.tsx # Global state management
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏁 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Prerequisites
+Ensure you have [Bun](https://bun.sh/) installed on your machine.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. Installation
+Clone the repository and install dependencies:
+```bash
+bun install
+```
 
-## Learn More
+### 3. Development
+Run the development server:
+```bash
+bun run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## 🌙 Dark Mode Implementation
+The system uses a manual toggle managed in `CheckinContext`. Tailwind CSS v4 is configured to detect the `.dark` class on the root element using a custom variant:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```css
+/* globals.css */
+@custom-variant dark (&:where(.dark, .dark *));
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+This project is licensed under the MIT License.
