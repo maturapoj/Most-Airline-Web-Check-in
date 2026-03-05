@@ -6,22 +6,7 @@ import { Plane, Info, TriangleAlert } from "lucide-react";
 import { useCheckin } from "@/store/CheckinContext";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
-const MOCK_PASSENGERS = [
-    {
-        id: "p1",
-        name: "ALEX HUUM",
-        type: "ADT",
-        seat: "12A",
-        selected: true,
-    },
-    {
-        id: "p2",
-        name: "Somsee Kuum",
-        type: "ADT",
-        seat: "12B",
-        selected: true,
-    },
-];
+import { fetchBooking } from "@/api/booking";
 
 export default function CheckinPage() {
     const router = useRouter();
@@ -41,18 +26,16 @@ export default function CheckinPage() {
         setIsLoading(true);
         setError(null);
 
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        // Simulated validation logic
-        if (pnr.toUpperCase() === "ABC123" && lastName.toUpperCase() === "HUUM") {
-            setBookingInfo(lastName.toUpperCase(), pnr.toUpperCase());
-            setPassengers(MOCK_PASSENGERS);
+        try {
+            const data = await fetchBooking(pnr, lastName);
+            setBookingInfo(data.lastName, data.pnr);
+            setPassengers(data.passengers);
             router.push("/select-pax");
-        } else {
-            setError("Booking not found. Please check your Last Name and PNR.");
+        } catch (e: any) {
+            setError(e.message || "Booking not found. Please check your Last Name and PNR.");
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
     return (

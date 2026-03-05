@@ -1,0 +1,58 @@
+-  request:
+      url: ^/api/v1/booking/retrieve$
+      method: POST
+      post: '.*ABC123.*HUUM.*'
+   response:
+      status: 200
+      headers:
+        content-type: application/json
+      body: >
+        {
+          "status": "success",
+          "data": {
+            "pnr": "ABC123",
+            "lastName": "HUUM",
+            "passengers": [
+              {
+                "id": "p1",
+                "name": "ALEX HUUM",
+                "type": "ADT",
+                "seat": "12A",
+                "selected": true
+              },
+              {
+                "id": "p2",
+                "name": "SOMSEE KUUM",
+                "type": "ADT",
+                "seat": "12B",
+                "selected": true
+              }
+            ]
+          }
+        }
+
+-  request:
+      url: ^/api/v1/booking/retrieve$
+      method: POST
+   response:
+      status: 404
+      headers:
+        content-type: application/json
+      body: >
+        {
+          "status": "error",
+          "message": "Booking not found"
+        }
+
+-  request:
+      url: ^/
+      method: GET
+   response:
+      status: 200
+      headers:
+        content-type: application/json
+      body: >
+        {
+          "status": "success",
+          "message": "Hello stubby"
+        }

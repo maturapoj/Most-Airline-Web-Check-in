@@ -9,3 +9,17 @@ services:
     environment:
       - NODE_ENV=production
     restart: always
+    depends_on:
+      - mock-api
+
+  mock-api:
+    image: oven/bun:1
+    container_name: airline-mock-api
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "8882:8882"
+      - "8889:8889"
+      - "7444:7444"
+    command: sh -c "bun install && bun run mock-api -- -w"

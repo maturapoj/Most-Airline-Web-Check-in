@@ -67,6 +67,15 @@ bun run dev
 ```
 Access the app at [http://localhost:3000](http://localhost:3000). Use **HUUM** and **ABC123** to bypass validation.
 
+## 🛠️ Mock API
+The project uses [stubby](https://www.npmjs.com/package/stubby) to provide a mock backend for testing.
+
+To run the mock API independently:
+```bash
+bun run mock-api
+```
+The mock server runs on port `8882`.
+
 ## 🐳 Docker Support
 
 The application is fully containerized for consistent deployment.

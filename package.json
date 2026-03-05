@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "mock-api": "stubby -d stubs/api.yaml -s 8882 -k stubs/key.pem -c stubs/cert.pem -t 7444"
   },
   "dependencies": {
     "lucide-react": "^0.577.0",
@@ -21,6 +22,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "stubby": "^5.1.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
