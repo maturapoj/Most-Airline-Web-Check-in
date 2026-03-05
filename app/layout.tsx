@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CheckinProvider } from "@/store/CheckinContext";
 import { ThemeWrapper } from "@/components/ThemeWrapper";
+import { StepGuard } from "@/components/StepGuard";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,7 +32,9 @@ export default function RootLayout({
       >
         <CheckinProvider>
           <ThemeWrapper>
-            {children}
+            <StepGuard>
+              {children}
+            </StepGuard>
           </ThemeWrapper>
         </CheckinProvider>
       </body>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { TriangleAlert } from "lucide-react";
 import { useCheckin } from "@/store/CheckinContext";
@@ -13,14 +13,13 @@ export default function DangerousGoodsPage() {
 
     const selectedPassengers = state.passengers.filter((p) => p.selected);
 
-    useEffect(() => {
-        if (selectedPassengers.length === 0) {
-            router.push("/select-pax");
-        }
-    }, [selectedPassengers, router]);
 
-    const handleContinue = () => {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleContinue = async () => {
         if (state.acceptedDangerousGoods) {
+            setIsLoading(true);
+            await new Promise((resolve) => setTimeout(resolve, 1500));
             router.push("/boarding-pass");
         }
     };
@@ -104,6 +103,7 @@ export default function DangerousGoodsPage() {
                         <PrimaryButton
                             onClick={handleContinue}
                             disabled={!state.acceptedDangerousGoods}
+                            isLoading={isLoading}
                         >
                             Accept & Continue
                         </PrimaryButton>

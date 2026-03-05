@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plane, Info } from "lucide-react";
+import { Plane, Info, TriangleAlert } from "lucide-react";
 import { useCheckin } from "@/store/CheckinContext";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -30,6 +30,7 @@ export default function CheckinPage() {
     const [lastName, setLastName] = useState("");
     const [pnr, setPnr] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const isValid = lastName.length >= 2 && pnr.length >= 5;
 
@@ -38,13 +39,20 @@ export default function CheckinPage() {
         if (!isValid) return;
 
         setIsLoading(true);
+        setError(null);
 
-        // Simulate API call
-        setTimeout(() => {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
+        // Simulated validation logic
+        if (pnr.toUpperCase() === "ABC123" && lastName.toUpperCase() === "HUUM") {
             setBookingInfo(lastName.toUpperCase(), pnr.toUpperCase());
             setPassengers(MOCK_PASSENGERS);
             router.push("/select-pax");
-        }, 1200);
+        } else {
+            setError("Booking not found. Please check your Last Name and PNR.");
+        }
+        setIsLoading(false);
     };
 
     return (
@@ -71,6 +79,12 @@ export default function CheckinPage() {
                     </div>
 
                     <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-700 transition-colors">
+                        {error && (
+                            <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-2xl flex items-start gap-3 animate-in slide-in-from-top-2 duration-300">
+                                <TriangleAlert className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                                <p className="text-sm font-medium text-red-600 dark:text-red-400">{error}</p>
+                            </div>
+                        )}
                         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                             <div>
                                 <label

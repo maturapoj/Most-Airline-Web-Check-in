@@ -13,12 +13,6 @@ export default function BoardingPassPage() {
 
     const selectedPassengers = state.passengers.filter((p) => p.selected);
 
-    useEffect(() => {
-        // If somehow arrived here without accepting dangerous goods or selecting passengers
-        if (selectedPassengers.length === 0 || !state.acceptedDangerousGoods) {
-            router.push("/checkin");
-        }
-    }, [selectedPassengers, state.acceptedDangerousGoods, router]);
 
     const handleDone = () => {
         // Usually clears state and redirects to home

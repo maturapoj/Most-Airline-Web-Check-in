@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckin } from "@/store/CheckinContext";
 import { StepHeader } from "@/components/StepHeader";
@@ -13,18 +13,15 @@ export default function SelectPaxPage() {
 
     const { passengers } = state;
 
-    useEffect(() => {
-        // If no passengers loaded, redirect back
-        if (passengers.length === 0) {
-            router.push("/checkin");
-        }
-    }, [passengers, router]);
 
+    const [isLoading, setIsLoading] = useState(false);
     const selectedCount = passengers.filter((p) => p.selected).length;
     const canContinue = selectedCount > 0;
 
-    const handleContinue = () => {
+    const handleContinue = async () => {
         if (canContinue) {
+            setIsLoading(true);
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             router.push("/pax-info");
         }
     };
@@ -75,7 +72,7 @@ export default function SelectPaxPage() {
                         Back
                     </button>
                     <div className="w-2/3">
-                        <PrimaryButton onClick={handleContinue} disabled={!canContinue}>
+                        <PrimaryButton onClick={handleContinue} disabled={!canContinue} isLoading={isLoading}>
                             Continue
                         </PrimaryButton>
                     </div>

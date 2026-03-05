@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckin } from "@/store/CheckinContext";
 import { StepHeader } from "@/components/StepHeader";
@@ -17,16 +17,15 @@ export default function PaxInfoPage() {
         (p) => p.nationality && p.nationality.length >= 2 && p.phone && p.phone.length > 5
     );
 
-    useEffect(() => {
-        if (selectedPassengers.length === 0) {
-            router.push("/select-pax");
-        }
-    }, [selectedPassengers, router]);
 
 
 
-    const handleContinue = () => {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleContinue = async () => {
         if (isValid) {
+            setIsLoading(true);
+            await new Promise((resolve) => setTimeout(resolve, 800));
             router.push("/dangerous-good");
         }
     };
@@ -118,7 +117,7 @@ export default function PaxInfoPage() {
                         Back
                     </button>
                     <div className="w-2/3">
-                        <PrimaryButton onClick={handleContinue} disabled={!isValid}>
+                        <PrimaryButton onClick={handleContinue} disabled={!isValid} isLoading={isLoading}>
                             Continue
                         </PrimaryButton>
                     </div>
