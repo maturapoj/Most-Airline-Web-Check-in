@@ -1,12 +1,12 @@
 "use client";
 
 import { useCheckin } from "@/store/CheckinContext";
-import React, { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
 export function ThemeWrapper({ children }: { children: ReactNode }) {
     const { state } = useCheckin();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (state.isDarkMode) {
             document.documentElement.classList.add("dark");
         } else {
